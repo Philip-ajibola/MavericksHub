@@ -20,4 +20,12 @@ public class GlobalExceptionHandler {
                 "success", false
         ));
     }
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseBody
+    public ResponseEntity<?> handleUserNotFound(UserNotFoundException exception){
+        return ResponseEntity.status(BAD_REQUEST).body(Map.of(
+                "error", exception.getMessage(),
+                "success", false
+        ));
+    }
 }
