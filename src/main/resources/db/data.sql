@@ -2,10 +2,10 @@ truncate table users cascade;
 truncate table media cascade;
 
 insert into users (id,email,password,time_created) values
-(200,'john@gmail.com','password','2024-06-04T15:03:03.79200097'),
- (201,'john1@gmail.com','password','2024-06-04T15:03:03.70200097'),
-(202,'john2@gmail.com','password','2024-06-04T15:03:03.70200097'),
-(203,'john3@gmail.com','password','2024-06-04T15:03:03.70200097');
+(200,'john@gmail.com','$2a$10$6iRlG/1I2j3jP9d7yzoEuO1yghRKn4xmO9Fd4DToqTYrmC1mxfIve','2024-06-04T15:03:03.79200097'),
+ (201,'john1@gmail.com','$2a$10$6iRlG/1I2j3jP9d7yzoEuO1yghRKn4xmO9Fd4DToqTYrmC1mxfIve','2024-06-04T15:03:03.70200097'),
+(202,'john2@gmail.com','$2a$10$6iRlG/1I2j3jP9d7yzoEuO1yghRKn4xmO9Fd4DToqTYrmC1mxfIve','2024-06-04T15:03:03.70200097'),
+(203,'john3@gmail.com','$2a$10$6iRlG/1I2j3jP9d7yzoEuO1yghRKn4xmO9Fd4DToqTYrmC1mxfIve','2024-06-04T15:03:03.70200097');
 
 insert into media (id,category,description,url,time_created,user_id) values
 (100,'ACTION','media 1','https://www.cloudinary.com/media1','2024-06-04T15:03:03.79200097',200),
