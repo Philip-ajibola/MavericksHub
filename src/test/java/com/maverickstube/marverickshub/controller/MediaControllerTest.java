@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.mock.web.MockPart;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest
 @Sql(scripts = {"/db/data.sql"})
+@WithMockUser(authorities = {"USER"})
 class MediaControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -50,12 +52,19 @@ class MediaControllerTest {
     @Test
     public void testGetMediaForUser(){
         try {
-            mockMvc.perform(get("/api/v1/media?userId=201")
+            mockMvc.perform(get("/api/v1/media?userId=200")
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is2xxSuccessful())
                     .andDo(print());
         }catch(Exception exception){
             assertThat(exception).isNull();
         }
+    }
+    @Test
+    public void testGetMediaForInvalidUserIdShouldFail() throws Exception {
+        mockMvc.perform(get("/api/v1/media?userId=2000")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
     }
 }
