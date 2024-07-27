@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
 
@@ -22,6 +23,7 @@ public class AuthenticationControllerTest {
     @Autowired
     private MockMvc mock;
     @Test
+    @Sql(scripts = {"/db/data.sql"})
     public void authenticateUserTest() throws Exception {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUsername("john2@gmail.com");
@@ -31,6 +33,20 @@ public class AuthenticationControllerTest {
                 .contentType(APPLICATION_JSON)
                 .content(objectMapper.writeValueAsBytes(loginRequest)))
                 .andExpect(status().isOk())
+                .andDo(print());
+
+    }
+@Test
+    @Sql(scripts = {"/db/data.sql"})
+    public void unAuthenticateUserTest() throws Exception {
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUsername("john2@gmail.com");
+        loginRequest.setPassword("wrongPassword");
+        ObjectMapper objectMapper = new ObjectMapper();
+        mock.perform(post("/api/v1/auth")
+                .contentType(APPLICATION_JSON)
+                .content(objectMapper.writeValueAsBytes(loginRequest)))
+                .andExpect(status().isUnauthorized())
                 .andDo(print());
 
     }
