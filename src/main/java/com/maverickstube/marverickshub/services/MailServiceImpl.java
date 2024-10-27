@@ -8,6 +8,8 @@ import com.maverickstube.marverickshub.dtos.request.Sender;
 import com.maverickstube.marverickshub.dtos.response.BrevoMailResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
@@ -39,5 +41,13 @@ public class MailServiceImpl implements MailService{
        if(response.getBody() != null && response.getStatusCode() == HttpStatusCode.valueOf(201)){
            return "mail sent successfully";
        }else throw new RuntimeException("Failed to send mail");
+    }
+
+    public static void main(String[] args) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        String rawPassword = "password";
+        String encodedPassword = passwordEncoder.encode(rawPassword);
+        System.out.println(encodedPassword);
     }
 }
